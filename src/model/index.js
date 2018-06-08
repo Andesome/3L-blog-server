@@ -32,11 +32,12 @@ const models = {
   },
   articles: {
     title: { type: String, require: false },
-    content: { type: String, require: true },
     author: { type: String, require: true },
+    content: { type: String, require: true },
     tags: { type: String, require: false },
     comments: { type: Array, require: false },
     views: { type: Number, require: false },
+    update_time: { type: Number, require: false },
     create_time: { type: Number, require: true },
   },
 };

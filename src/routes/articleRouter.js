@@ -2,13 +2,13 @@ const Router = require('koa-router');
 const models = require('../model');
 
 const ArticlestModel = models.getModel('articles');
-const projectRouter = new Router({
+const articleRouter = new Router({
   prefix: '/api/blog',
 });
 
 
-// GET:项目列表
-projectRouter.get('/articles', async (ctx, next) => {
+// GET:文章列表
+articleRouter.get('/articles', async (ctx, next) => {
   const projectList = await ArticlestModel.find({});
   ctx.body = {
     msg: 'articles list',
@@ -16,36 +16,36 @@ projectRouter.get('/articles', async (ctx, next) => {
   };
 });
 
-// GET: 项目详情
-projectRouter.get('/articles/:id', async (ctx, next) => {
+// GET: 文章详情
+articleRouter.get('/articles/:id', async (ctx, next) => {
   const reqParams = ctx.params;
-  const project = await ArticlestModel.find({ _id: reqParams.id });
+  const project = await ArticlestModel.findOne({ _id: reqParams.id });
   ctx.body = {
-    msg: 'project detail',
+    msg: 'articles detail',
     data: project,
   };
 });
 
-// POST: 新增项目
+// POST: 新增文章
 // {
 //   "title":"test",
 //   "content":"test",
 //   "create_time":123456
 // }
-projectRouter.post('/articles', async (ctx, next) => {
+articleRouter.post('/articles', async (ctx, next) => {
   const reqBody = ctx.request.body;
   const project = new ArticlestModel(reqBody);
   const res = await project.save((err) => {
     console.log('save satatus:', err);
   });
   ctx.body = {
-    msg: 'new project',
+    msg: 'new articles',
     data: res,
   };
 });
 
-// DELETE: 删除项目
-projectRouter.delete('/articles', async (ctx, next) => {
+// DELETE: 删除文章
+articleRouter.delete('/articles', async (ctx, next) => {
   const { ids } = ctx.request.body;
   const res = await ArticlestModel.remove({ _id: { $in: ids } });
   ctx.body = {
@@ -54,8 +54,8 @@ projectRouter.delete('/articles', async (ctx, next) => {
   };
 });
 
-// PUT: 更新项目
-projectRouter.put('/articles/:id', async (ctx, next) => {
+// PUT: 更新文章
+articleRouter.put('/articles/:id', async (ctx, next) => {
   const reqBody = ctx.request.body;
   const { id } = ctx.params;
   console.log('--', id, reqBody);
@@ -67,5 +67,5 @@ projectRouter.put('/articles/:id', async (ctx, next) => {
 });
 
 
-module.exports = projectRouter;
+module.exports = articleRouter;
 
