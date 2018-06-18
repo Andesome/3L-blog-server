@@ -35,9 +35,13 @@ const models = {
     author: { type: String, require: true },
     content: { type: String, require: true },
     tags: { type: String, require: false },
-    comments: { type: Array, require: false,default:[] },
-    views: { type: Number, require: false,default:0 },
+    comments: { type: Array, require: false, default: [] },
+    views: { type: Number, require: false, default: 0 },
     update_time: { type: Number, require: false },
+    create_time: { type: Number, require: true },
+  },
+  sec: {
+    navigator: { type: Object },
     create_time: { type: Number, require: true },
   },
 };

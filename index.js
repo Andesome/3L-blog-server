@@ -3,7 +3,8 @@ const Router = require('koa-router');
 const koaBody = require('koa-body');
 
 const projectRouter = require('./src/routes/projectRouter');
-const ArticleRouter = require('./src/routes/articleRouter')
+const ArticleRouter = require('./src/routes/articleRouter');
+const secRouter = require('./src/routes/secRouter');
 
 const app = new Koa();
 const router = new Router();
@@ -44,6 +45,7 @@ app
   .use(router.routes())
   .use(projectRouter.routes())
   .use(ArticleRouter.routes())
+  .use(secRouter.routes())
   .use(router.allowedMethods());
 
-app.listen(PORT, () => { console.log(`服务器在${PORT}端口运行`) });
+app.listen(PORT, () => { console.log(`服务器在${PORT}端口运行`); });
