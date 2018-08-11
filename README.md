@@ -1,7 +1,7 @@
-# URL地址
- URL前缀 /api/blog
+# 接口地址
+接口前缀 /api/blog
 
-# 文章相关
+# 文章相关
 ## 获取文章列表
 > Get:  /articles
 
