@@ -44,6 +44,11 @@ const models = {
     navigator: { type: Object },
     create_time: { type: Number, require: true },
   },
+  counters:{
+    _id:{type:String,require:true},
+    views:0,
+
+  }
 };
 
 for (const m in models) {

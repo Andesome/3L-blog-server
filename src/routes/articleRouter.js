@@ -2,6 +2,32 @@ const Router = require('koa-router');
 const models = require('../model');
 
 const ArticlestModel = models.getModel('articles');
+const CountersModel = models.getModel('counters');
+
+// let counter = new CountersModel({ _id: 'test d', views: 1 });
+// counter.save(err => {
+//   if (err) {
+//     console.log('出错', err)
+//   } else {
+//     console.log('counter插入成功');
+//   }
+// })
+/**
+ * 计算文章的浏览量
+ * @param {string} id 文章id
+ * @returns {Number} 新的views 
+ */
+// function getNextSequence(id) {
+//   var ret = db.counters.findAndModify(
+//     {
+//       query: { _id: name },
+//       update: { $inc: { seq: 1 } },
+//       new: true
+//     }
+//   );
+//   return ret.seq;
+// }
+
 const articleRouter = new Router({
   prefix: '/api/blog',
 });
@@ -19,7 +45,13 @@ articleRouter.get('/articles', async (ctx, next) => {
 // GET: 文章详情
 articleRouter.get('/articles/:id', async (ctx, next) => {
   const reqParams = ctx.params;
-  const project = await ArticlestModel.findOne({ _id: reqParams.id });
+  const project = await ArticlestModel.findOneAndUpdate({
+    _id: reqParams.id
+  }, {
+      $inc: { views: 1 }
+    }, {
+      new: true
+    });
   ctx.body = {
     msg: 'articles detail',
     data: project,
