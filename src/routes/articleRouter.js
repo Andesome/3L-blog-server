@@ -35,7 +35,7 @@ const articleRouter = new Router({
 
 // GET:文章列表
 articleRouter.get('/articles', async (ctx, next) => {
-  const projectList = await ArticlestModel.find({});
+  const projectList = await ArticlestModel.find({}).sort({create_time:-1});
   ctx.body = {
     msg: 'articles list',
     data: projectList,
