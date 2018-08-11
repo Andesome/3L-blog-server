@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-const DB_URL = 'mongodb://60.205.179.15:27017/blog';
+const DB_URL = 'mongodb://47.96.109.136:27017/blog';
 
 // 连接数据库
 mongoose.connect(DB_URL, (err, db) => {
