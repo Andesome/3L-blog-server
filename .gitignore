@@ -6,6 +6,9 @@
 # production
 /dist
 
+# 忽略私有配合文件
+src/constant/privateConfig.js
+
 # misc
 .DS_Store
 npm-debug.log*

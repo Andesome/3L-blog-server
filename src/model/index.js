@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
+const { DB_URL } = require('../constant/privateConfig.js');
 
 mongoose.Promise = global.Promise;
-
-const DB_URL = 'mongodb://47.96.109.136:27017/blog';
 
 // 连接数据库
 mongoose.connect(DB_URL, (err, db) => {
@@ -44,9 +43,9 @@ const models = {
     navigator: { type: Object },
     create_time: { type: Number, require: true },
   },
-  counters:{
-    _id:{type:String,require:true},
-    views:0,
+  counters: {
+    _id: { type: String, require: true },
+    views: 0,
 
   }
 };
