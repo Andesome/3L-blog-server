@@ -5,6 +5,7 @@ const koaBody = require('koa-body');
 const projectRouter = require('./src/routes/projectRouter');
 const ArticleRouter = require('./src/routes/articleRouter');
 const secRouter = require('./src/routes/secRouter');
+const commentRouter = require('./src/routes/commentRouter');
 
 const app = new Koa();
 const router = new Router();
@@ -22,23 +23,37 @@ app.use(async (ctx, next) => {
 
 app.use(async (ctx, next) => {
   const start = Date.now();
-  await next();
+  try {
+    await next();
+  } catch (e) {
+    console.log('统一处理错误', e);
+    ctx.body = {
+      code: 500,
+      msg: e.message,
+      errorObject: {
+        message: e.message,
+        name: e.name,
+        stringValue: e.stringValue,
+        kind: e.kind,
+        value: e.value,
+        path: e.path,
+        reason: e.reason,
+      },
+    };
+  }
   const ms = Date.now() - start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}`);
 });
-
 
 // root
 router.get('/', (ctx, next) => {
   ctx.body = 'home';
 });
 
-
 // test
 router.get('/test', (ctx, next) => {
   ctx.body = { name: 'lll', age: 25 };
 });
-
 
 app
   .use(koaBody({ strict: false }))
@@ -46,6 +61,9 @@ app
   .use(projectRouter.routes())
   .use(ArticleRouter.routes())
   .use(secRouter.routes())
-  .use(router.allowedMethods());
+  .use(router.allowedMethods())
+  .use(commentRouter.routes());
 
-app.listen(PORT, () => { console.log(`服务器在${PORT}端口运行`); });
+app.listen(PORT, () => {
+  console.log(`服务器在${PORT}端口运行`);
+});

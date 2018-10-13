@@ -2,7 +2,6 @@ const Router = require('koa-router');
 const models = require('../model');
 
 const ArticlestModel = models.getModel('articles');
-const CountersModel = models.getModel('counters');
 
 // let counter = new CountersModel({ _id: 'test d', views: 1 });
 // counter.save(err => {
@@ -15,7 +14,7 @@ const CountersModel = models.getModel('counters');
 /**
  * 计算文章的浏览量
  * @param {string} id 文章id
- * @returns {Number} 新的views 
+ * @returns {Number} 新的views
  */
 // function getNextSequence(id) {
 //   var ret = db.counters.findAndModify(
@@ -32,10 +31,9 @@ const articleRouter = new Router({
   prefix: '/api/blog',
 });
 
-
 // GET:文章列表
 articleRouter.get('/articles', async (ctx, next) => {
-  const projectList = await ArticlestModel.find({}).sort({create_time:-1});
+  const projectList = await ArticlestModel.find({}).sort({ create_time: -1 });
   ctx.body = {
     msg: 'articles list',
     data: projectList,
@@ -45,13 +43,17 @@ articleRouter.get('/articles', async (ctx, next) => {
 // GET: 文章详情
 articleRouter.get('/articles/:id', async (ctx, next) => {
   const reqParams = ctx.params;
-  const project = await ArticlestModel.findOneAndUpdate({
-    _id: reqParams.id
-  }, {
-      $inc: { views: 1 }
-    }, {
-      new: true
-    });
+  const project = await ArticlestModel.findOneAndUpdate(
+    {
+      _id: reqParams.id,
+    },
+    {
+      $inc: { views: 1 },
+    },
+    {
+      new: true,
+    }
+  );
   ctx.body = {
     msg: 'articles detail',
     data: project,
@@ -98,6 +100,4 @@ articleRouter.put('/articles/:id', async (ctx, next) => {
   };
 });
 
-
 module.exports = articleRouter;
-
