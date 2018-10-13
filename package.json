@@ -4,6 +4,7 @@
   "description": "3L-Blog服务端",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,5 +14,8 @@
     "koa-body": "^2.5.0",
     "koa-router": "^7.4.0",
     "mongoose": "^5.0.13"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }
