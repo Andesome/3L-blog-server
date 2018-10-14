@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const models = require('../model');
+const config = require('../constant/config');
 
 const ArticlestModel = models.getModel('articles');
 
@@ -28,12 +29,29 @@ const ArticlestModel = models.getModel('articles');
 // }
 
 const articleRouter = new Router({
-  prefix: '/api/blog',
+  prefix: config.prefix,
 });
 
 // GET:文章列表
 articleRouter.get('/articles', async (ctx, next) => {
-  const projectList = await ArticlestModel.find({}).sort({ create_time: -1 });
+  const { keyword, pageSize = config.defaultPageSize, page = 1 } = ctx.query;
+  const limit = Number(pageSize);
+  const skip = (Number(page) - 1) * limit;
+  const reg = new RegExp(keyword, 'i');
+
+  const projectList = await ArticlestModel.find(
+    {
+      $or: [{ content: { $regex: reg } }, { title: { $regex: reg } }],
+    },
+    {
+      __v: 0,
+    },
+    {
+      sort: { create_time: -1 },
+      skip,
+      limit,
+    }
+  );
   ctx.body = {
     msg: 'articles list',
     data: projectList,

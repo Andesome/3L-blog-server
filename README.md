@@ -84,3 +84,11 @@
 |   必选    | 类型 |  说明  |
 | :-------: | :--: | :----: |
 | commentId |  是  | String | 评论 ID |
+
+# 搜索
+
+## 搜索文章
+
+> get: /search/articles?keyword=${keyword}
+
+支持模糊搜索，可根据文章标题及内容搜索

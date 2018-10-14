@@ -6,6 +6,7 @@ const projectRouter = require('./src/routes/projectRouter');
 const ArticleRouter = require('./src/routes/articleRouter');
 const secRouter = require('./src/routes/secRouter');
 const commentRouter = require('./src/routes/commentRouter');
+const searchRouter = require('./src/routes/searchRouter');
 
 const app = new Koa();
 const router = new Router();
@@ -26,7 +27,7 @@ app.use(async (ctx, next) => {
   try {
     await next();
   } catch (e) {
-    console.log('统一处理错误', e);
+    // console.log('统一处理错误', e);
     ctx.body = {
       code: 500,
       msg: e.message,
@@ -62,7 +63,8 @@ app
   .use(ArticleRouter.routes())
   .use(secRouter.routes())
   .use(router.allowedMethods())
-  .use(commentRouter.routes());
+  .use(commentRouter.routes())
+  .use(searchRouter.routes());
 
 app.listen(PORT, () => {
   console.log(`服务器在${PORT}端口运行`);
