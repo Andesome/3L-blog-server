@@ -12,3 +12,4 @@ src/constant/privateConfig.js
 # misc
 .DS_Store
 npm-debug.log*
+yarn-error.log
